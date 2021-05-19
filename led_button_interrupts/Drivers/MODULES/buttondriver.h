@@ -1,9 +1,4 @@
-/*
- * buttondriver.h
- *
- *  Created on: Mar 18, 2021
- *      Author: Numan
- */
+
 
 #ifndef MODULS_BUTTONDRIVER_H_
 #define MODULS_BUTTONDRIVER_H_
