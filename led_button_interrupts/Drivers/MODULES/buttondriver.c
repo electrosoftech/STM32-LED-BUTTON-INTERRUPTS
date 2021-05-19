@@ -1,17 +1,12 @@
-/*
- * buttondriver.c
- *
- *  Created on: Mar 18, 2021
- *      Author: Numan
- */
+
 #include "stm32f4xx_hal.h"
 
 void buttondriver_init()
 {
-	RCC->AHB1ENR |= (1<<0);
+	RCC->AHB1ENR |= (0x00000001);
 
 	GPIOA->MODER &= ~(1<<1);
-	GPIOA->MODER &= ~(1<<0);
+	GPIOA->MODER &= ~(0x00000001);
 }
 
 void buttonDriverInt_Init()
@@ -21,11 +16,10 @@ void buttonDriverInt_Init()
 	//GPIOC
 
 	GPIOA->MODER &= ~(1<<1);
-	GPIOA->MODER &= ~(1<<0);
-//	GPIOA ->MODER &= ~((3UL << 0));
-//	GPIOA ->PUPDR &= ~((3UL << 0));
+	GPIOA->MODER &= ~(0x00000001);
+     //	GPIOA ->MODER &= ~((3UL << 0));
 	//SYSCFG
-	SYSCFG->EXTICR[0] |= SYSCFG_EXTICR1_EXTI0_PA;
+	SYSCFG->EXTICR[0] = SYSCFG_EXTICR1_EXTI0_PA;
 	//EXTI
 	EXTI-> IMR |= EXTI_IMR_IM0;
 	EXTI-> RTSR |= EXTI_RTSR_TR0;
@@ -37,10 +31,10 @@ void buttonDriverInt_Init()
 
 void EXTI0_IRQHandler(void)
 {
-
+        EXTI->PR |= EXTI_PR_PR0;
 	GPIOD->ODR ^= GPIO_PIN_12;
 	GPIOD->ODR ^= GPIO_PIN_13;
 	GPIOD->ODR ^= GPIO_PIN_14;
 	GPIOD->ODR ^= GPIO_PIN_15;
-	EXTI->PR |= EXTI_PR_PR0;
+	
 }
